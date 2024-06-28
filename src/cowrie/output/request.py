@@ -1,5 +1,6 @@
 from __future__ import annotations
 import requests
+import os
 
 import cowrie.core.output
 from cowrie.core.config import CowrieConfig
@@ -24,7 +25,7 @@ class Output(cowrie.core.output.Output):
                 "src_ip": event["src_ip"],
                 "time_stamp": event["timestamp"],
                 "input_cmd": event["input"],
-                "honeypotname": "cowrie-honeypot",
+                "honeypot_name": os.getenv("HONEYPOT_NAME", "cowrie"),
                 "session_id": event["session"]
             })
         
