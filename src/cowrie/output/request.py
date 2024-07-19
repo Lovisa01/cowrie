@@ -12,20 +12,20 @@ class Output(cowrie.core.output.Output):
     """
 
     def start(self):
-        self.DATABASE_URL = os.getenv("COLLECTION_URL_COWRIE")
-        self.API_KEY = os.getenv("MONGO_API_KEY_COWRIE")
+        self.DATABASE_URL = os.getenv("COLLECTION_URL_COWRIE", "") + "insertOne"
+        self.API_KEY = os.getenv("MONGO_API_KEY_COWRIE", "")
         self.HONEYPOT_NAME = os.getenv("HONEYPOT_NAME", "cowrie")
 
-        print("Starting plugin to send logs to " + self.addr)
+        print("Starting plugin to send logs to " + self.DATABASE_URL)
 
     def stop(self):
-        print("Stopping plugin to request to " + self.addr)
+        print("Stopping plugin to request to " + self.DATABASE_URL)
 
     def write(self, event):
-        if API_KEY is None:
+        if len(self.API_KEY) == 0:
             print("API_KEY is not set")
             return
-        if DATABASE_URL is None:
+        if self.DATABASE_URL == "insertOne":
             print("DATABASE_URL is not set")
             return
 
